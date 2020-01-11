@@ -49,10 +49,10 @@ public class HelloControllerTest extends MVCIntegrationTest {
 
 	@Test
 	public void returnsBadRequestWhenUnexpectedAttributeProvided() throws Exception {
-		String body = "{ \"tacos\":\"value\" }}";
+		final String body = "{ \"tacos\":\"value\" }}";
 		mockMvc.perform(post("/hello").content(body).contentType(MediaType.APPLICATION_JSON))
-		       .andExpect(status().isBadRequest())
-		       .andExpect(jsonPath("$.message", containsString(GlobalControllerAdvice.MESSAGE_UNRECOGNIZED_PROPERTY)));
+                       .andExpect(status().isUnprocessableEntity())
+		       .andExpect(jsonPath("$.message", containsString(GlobalControllerAdvice.BAD_REQUEST)));
 	}
 
 	@Test
