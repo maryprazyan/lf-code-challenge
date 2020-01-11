@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 /**
  * Simple greeting message for dev purposes
  */
+// TODO: make lomobok Data and remove set and get
 public class Greeting implements Entity {
 
 	@NotEmpty(groups = {EntityUpdateValidatorGroup.class})

@@ -12,50 +12,58 @@ import java.util.UUID;
 @Service
 public class HelloWorldService {
 
-	public static final String GREETING_NOT_FOUND = "Greeting Not Found";
+    public static final String GREETING_NOT_FOUND = "Greeting Not Found";
 
-	public static String DEFAULT_ID = "default";
+    public static String DEFAULT_ID = "default";
 
-	public static String DEFAULT_MESSAGE = "Hello World!";
+    public static String DEFAULT_MESSAGE = "Hello World!";
 
-	private Map<String, Greeting> greetings;
+    private final Map<String, Greeting> greetings;
 
-	private EntityValidator entityValidator;
+    private final EntityValidator entityValidator;
 
-	public HelloWorldService(EntityValidator entityValidator) {
-		this.entityValidator = entityValidator;
+    public HelloWorldService(EntityValidator entityValidator) {
+        this.entityValidator = entityValidator;
 
-		this.greetings = new HashMap<>(1);
-		save(getDefault());
-	}
+        this.greetings = new HashMap<>(1);
+        this.save(getDefault());
+    }
 
-	private static Greeting getDefault() {
-		return new Greeting(DEFAULT_ID, DEFAULT_MESSAGE);
-	}
+    private static Greeting getDefault() {
+        return new Greeting(DEFAULT_ID, DEFAULT_MESSAGE);
+    }
 
-	public Greeting createGreeting(Greeting request) {
-		entityValidator.validateCreate(request);
+    public Greeting createGreeting(Greeting request) {
+        entityValidator.validateCreate(request);
 
-		request.setId(UUID.randomUUID().toString());
-		return save(request);
-	}
+        request.setId(UUID.randomUUID().toString());
+        return this.save(request);
+    }
 
-	public Optional<Greeting> getGreeting(String id) {
-		Greeting greeting = greetings.get(id);
-		if (greeting == null) {
-			return Optional.empty();
-		}
+    public Optional<Greeting> updateGreeting(Greeting request) {
+        entityValidator.validateUpdate(request);
+        if(this.greetings.containsKey(request.getId())) {
+            return Optional.of(this.save(request));
+        }
+        return Optional.empty();
+    }
 
-		return Optional.of(greeting);
-	}
+    public Optional<Greeting> getGreeting(String id) {
+        Greeting greeting = this.greetings.get(id);
+        if (greeting == null) {
+            return Optional.empty();
+        }
 
-	public Optional<Greeting> getDefaultGreeting() {
-		return getGreeting(DEFAULT_ID);
-	}
+        return Optional.of(greeting);
+    }
 
-	private Greeting save(Greeting greeting) {
-		this.greetings.put(greeting.getId(), greeting);
+    public Optional<Greeting> getDefaultGreeting() {
+        return this.getGreeting(DEFAULT_ID);
+    }
 
-		return greeting;
-	}
+    private Greeting save(Greeting greeting) {
+        this.greetings.put(greeting.getId(), greeting);
+
+        return greeting;
+    }
 }

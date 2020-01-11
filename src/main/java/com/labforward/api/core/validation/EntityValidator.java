@@ -11,7 +11,7 @@ public class EntityValidator {
 
 	public static final String MESSAGE_NO_ID_MATCH = "id provided does not match resource";
 
-	private SpringValidatorAdapter validatorAdapter;
+	private final SpringValidatorAdapter validatorAdapter;
 
 	@Autowired
 	public EntityValidator(SpringValidatorAdapter validatorAdapter) {
