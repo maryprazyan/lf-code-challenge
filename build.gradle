@@ -29,8 +29,12 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.apache.commons:commons-lang3:3.9")
     compile("com.google.guava:guava:28.1-jre")
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('com.jayway.jsonpath:json-path')
     compileOnly 'org.projectlombok:lombok:1.18.10'
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
 }
+
