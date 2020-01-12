@@ -16,37 +16,69 @@ import java.util.Optional;
 @SpringBootTest
 public class HelloWorldServiceTest {
 
-	@Autowired
-	private HelloWorldService helloService;
+    private static final String HELLO_LUKE = "Hello Luke";
+    private static final String HELLO_MARY = "Hello Mary";
 
-	public HelloWorldServiceTest() {
-	}
+    @Autowired
+    private HelloWorldService helloService;
 
-	@Test
-	public void getDefaultGreetingIsOK() {
-		Optional<Greeting> greeting = helloService.getDefaultGreeting();
-		Assert.assertTrue(greeting.isPresent());
-		Assert.assertEquals(HelloWorldService.DEFAULT_ID, greeting.get().getId());
-		Assert.assertEquals(HelloWorldService.DEFAULT_MESSAGE, greeting.get().getMessage());
-	}
+    public HelloWorldServiceTest() {
+    }
 
-	@Test(expected = EntityValidationException.class)
-	public void createGreetingWithEmptyMessageThrowsException() {
-		final String EMPTY_MESSAGE = "";
-		helloService.createGreeting(new Greeting(EMPTY_MESSAGE));
-	}
+    /* ***** Tests for Get method ***** */
+    @Test
+    public void getDefaultGreetingIsOK() {
+        Optional<Greeting> greeting = helloService.getDefaultGreeting();
+        Assert.assertTrue(greeting.isPresent());
+        Assert.assertEquals(HelloWorldService.DEFAULT_ID, greeting.get().getId());
+        Assert.assertEquals(HelloWorldService.DEFAULT_MESSAGE, greeting.get().getMessage());
+    }
 
-	@Test(expected = EntityValidationException.class)
-	public void createGreetingWithNullMessageThrowsException() {
-		helloService.createGreeting(new Greeting(null));
-	}
+    /* ***** Tests for Create method ***** */
+    @Test(expected = EntityValidationException.class)
+    public void createGreetingWithEmptyMessageThrowsException() {
+        final String EMPTY_MESSAGE = "";
+        helloService.createGreeting(new Greeting(EMPTY_MESSAGE));
+    }
 
-	@Test
-	public void createGreetingOKWhenValidRequest() {
-		final String HELLO_LUKE = "Hello Luke";
-		Greeting request = new Greeting(HELLO_LUKE);
+    @Test(expected = EntityValidationException.class)
+    public void createGreetingWithNullMessageThrowsException() {
+        helloService.createGreeting(new Greeting(null));
+    }
 
-		Greeting created = helloService.createGreeting(request);
-		Assert.assertEquals(HELLO_LUKE, created.getMessage());
-	}
+    @Test
+    public void createGreetingOKWhenValidRequest() {
+        Greeting request = new Greeting(HELLO_LUKE);
+
+        Greeting created = helloService.createGreeting(request);
+        Assert.assertEquals(HELLO_LUKE, created.getMessage());
+    }
+
+    /* ***** Tests for Update method ***** */
+    @Test(expected = EntityValidationException.class)
+    public void updateGreetingWithEmptyMessageThrowsException() {
+        final String EMPTY_MESSAGE = "";
+        helloService.updateGreeting(new Greeting(EMPTY_MESSAGE));
+    }
+
+    @Test(expected = EntityValidationException.class)
+    public void updateGreetingWithNullMessageThrowsException() {
+        helloService.updateGreeting(new Greeting(null));
+    }
+
+    @Test
+    public void updateGreetingOKWhenValidRequest() {
+        Greeting request = new Greeting(HELLO_LUKE);
+
+        Greeting created = helloService.createGreeting(request);
+        Assert.assertEquals(HELLO_LUKE, created.getMessage());
+
+        String id = created.getId();
+        Greeting newRequest = new Greeting(id, HELLO_MARY);
+        Optional<Greeting> updated = helloService.updateGreeting(newRequest);
+        
+        Assert.assertTrue(updated.isPresent());
+        Assert.assertEquals(HELLO_MARY, updated.get().getMessage());
+        
+    }
 }

@@ -4,11 +4,18 @@ import com.labforward.api.core.validation.Entity;
 import com.labforward.api.core.validation.EntityUpdateValidatorGroup;
 
 import javax.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 /**
  * Simple greeting message for dev purposes
  */
-// TODO: make lomobok Data and remove set and get
+@Data
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 public class Greeting implements Entity {
 
 	@NotEmpty(groups = {EntityUpdateValidatorGroup.class})
@@ -17,33 +24,7 @@ public class Greeting implements Entity {
 	@NotEmpty
 	private String message;
 
-	public Greeting() {
-		// needed for JSON deserialization
-	}
-
-	public Greeting(String id, String message) {
-		this.message = message;
-		this.id = id;
-	}
-
 	public Greeting(String message) {
-		this.message = message;
-		this.id = id;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
 		this.message = message;
 	}
 }

@@ -36,7 +36,9 @@ public class HelloWorldService {
     public Greeting createGreeting(Greeting request) {
         entityValidator.validateCreate(request);
 
-        request.setId(UUID.randomUUID().toString());
+        if(request.getId() == null) {
+            request.setId(UUID.randomUUID().toString());
+        }
         return this.save(request);
     }
 
