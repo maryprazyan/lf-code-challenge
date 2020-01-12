@@ -1,33 +1,29 @@
-# Labforward Code Challenge for Backend Engineer Candidate
+## Task 
 
-This is a simple Hello World API for recruiting purposes. You, as a candidate, should work on the challenge on your own account. Please clone the repo to your account and create a PR with your solution. 
+Add a new endpoint to the API to allow users to *update the greetings they created*.
 
-## Introduction
+## Solution
 
-You can run the application by typing
+1. I build the app and fixed failing test, which return message type should have been "Bad Request"
+2. Updated the HelloController with new PUT method
+3. Wrote tests keeping the same coding style
+4. Updated Greeting DTO using lomobok
 
-	./gradlew bootRun
+## User Interface
 
-This will start up a Spring Boot application with Tomcat server running on 8080.
+For simple UI I used Swagger, which I'm using in my everyday work.
 
-Show all other possible tasks:
+## Testing
 
-	./gradlew tasks
-	
-## Your Task	
+I did testing both running unit tests and using Swagger
 
-You need to add a new endpoint to the API to allow users to *update the greetings they created*. 
+## Time Spent
 
-## Acceptance Criteria
+I worked two days on this task, each day around 4-5 hours. So together 8-10 hours of work
 
-This task is purposefully open-ended. You are free to come up with your own implementation based on your assumptions. You are also welcome to improve the existing code by refactoring, cleaning up, etc. where necessary. Hint: there is a missing core piece in the application :) 
+## Better To have
 
-Extra points for describing a user interface which utilizes the API with the new endpoint. This can be a text document, simple mock-ups, or even an interactive HTML proof-of-concept. Be creative and show us how you approach UI problems.
+1. It would be better to have more comments and descriptions
+2. For better testing we can have "delete all" functionality, which would have delete all the data and testing of "update" could be done in this flow: deleteAll -> createData -> updateData
+3. It would also be better to have HelloClient, so HelloService would call HelloClient's methods, but as they're very simple, I didn't add additional layer.
 
-We understand that not everyone has the same amount of "extra" time. It is also up to you to determine the amount of time you spend on the exercise. So that the reviewer understands how you are defining the scope of work, please clearly indicate your own “Definition of Done” for the task in a README file along with any other pertinent information.
-
-Regardless of how far you take the solution towards completion, please assume you are writing production code. Your solution should clearly communicate your development style, abilities, and approach to problem solving. 
-
-Let us know if you have any questions, and we look forward to seeing your approach.
-
-Good Luck!
